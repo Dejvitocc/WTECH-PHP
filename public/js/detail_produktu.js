@@ -29,3 +29,52 @@ function changeImage(imageSrc, thumbnail) {
     document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
     thumbnail.classList.add('active');
 }
+
+document.getElementById('search-form').addEventListener('submit', function(event) {
+    const searchInput = document.querySelector('input[name="search"]').value.trim();
+    if (!searchInput) {
+        event.preventDefault(); // Zastaví odoslanie, ak je pole prázdne
+        alert('Zadajte názov produktu!');
+    }
+});
+
+function selectColor(element) {
+    // Odstrániť "selected" triedu zo všetkých farieb
+    document.querySelectorAll('.color-circle').forEach(circle => {
+        circle.classList.remove('selected');
+    });
+    
+    // Pridať "selected" triedu na kliknutú farbu
+    element.classList.add('selected');
+    
+    // Aktualizovať skryté pole s vybranou farbou
+    document.getElementById('selected-color').value = element.getAttribute('data-color');
+}
+
+function selectSize(element) {
+    // Odstrániť "selected" triedu zo všetkých veľkostí
+    document.querySelectorAll('.size-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // Pridať "selected" triedu na kliknutú veľkosť
+    element.classList.add('selected');
+    
+    // Aktualizovať skryté pole s vybranou veľkosťou
+    document.getElementById('selected-size').value = element.textContent.trim();
+}
+
+//overenie či dal zákazník farbu aj veľkosť
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('add-to-cart-form');
+
+    form.addEventListener('submit', function (e) {
+      const selectedColor = document.getElementById('selected-color').value;
+      const selectedSize = document.getElementById('selected-size').value;
+
+      if (!selectedColor || !selectedSize) {
+        e.preventDefault(); // Zastaví odoslanie formulára
+        alert('Prosím, vyberte farbu a veľkosť produktu.');
+      }
+    });
+  });

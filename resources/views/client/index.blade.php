@@ -18,14 +18,14 @@
                     </a>
                 </div>
                 <div class="col-lg-8 col-md-7 d-flex justify-content-center">
-                    <form class="d-flex w-100 justify-content-center" role="search">
-                        <input type="search" class="form-control form-control-sm text-center me-2" placeholder="Zadajte názov produktu..." aria-label="Vyhľadávanie">
-                        <button class="btn btn-dark btn-sm me-3" type="submit">Hľadať</button>
+                    <form method="GET" action="{{route('search')}}" class="d-flex w-100 justify-content-center" role="search">
+                        <input type="search" name="search" class="form-control form-control-sm text-center me-2" placeholder="Zadajte názov produktu..." aria-label="Vyhľadávanie" value="{{request('search')}}">
+                        <button class="btn btn-dark btn-sm me-3" type="submit" id="searchButton">Hľadať</button>
                     </form>
                 </div>
                 <div class="col-lg-2 col-md-3 d-flex justify-content-center">
                     <a href="{{url('/prihlasenie')}}"><button class="btn btn-dark btn-sm me-1">Prihlásenie</button></a>
-                    <a href="{{url('/kosik')}}"><button class="btn btn-dark btn-sm me-1">Košík</button></a>
+                    <a href="{{url('/cart')}}"><button class="btn btn-dark btn-sm me-1">Košík</button></a>
                     <a href="sprava_objednavok_zakaznikov_A.html"><button class="btn btn-dark btn-sm">Admin</button></a>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                             @foreach($newProducts as $index => $product)
                                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                     <div class="col-12 col-md-3">
-                                        <a href="{{ url('/detail_produktu') }}" class="text-decoration-none card-link">
+                                        <a href="{{ route('detail_produktu', $product->id) }}" class="text-decoration-none card-link">
                                             <div class="card">
                                                 @if($product->images->isNotEmpty())
                                                     <img src="{{ asset($product->images->first()->route) }}" class="card-img-top img-fluid" alt="{{ $product->name }}">
@@ -138,7 +138,7 @@
                             @foreach($popularProducts as $index => $product)
                                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                     <div class="col-12 col-md-3">
-                                        <a href="{{ url('/detail_produktu') }}" class="text-decoration-none card-link">
+                                        <a href="{{ route('detail_produktu', $product->id) }}" class="text-decoration-none card-link">
                                             <div class="card">
                                                 @if($product->images->isNotEmpty())
                                                     <img src="{{ asset($product->images->first()->route) }}" class="card-img-top img-fluid" alt="{{ $product->name }}">

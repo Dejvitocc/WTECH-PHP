@@ -40,3 +40,11 @@ document.addEventListener('DOMContentLoaded', function () {
 function openCategory(category) {
     window.location.href = `/kategorie?kategoria=${category}`;
 }
+
+document.getElementById('search-form').addEventListener('submit', function(event) {
+    const searchInput = document.querySelector('input[name="search"]').value.trim();
+    if (!searchInput) {
+        event.preventDefault(); // Zastaví odoslanie, ak je pole prázdne
+        alert('Zadajte názov produktu!');
+    }
+});

@@ -30,38 +30,38 @@ function generateSubcategories(category) {
     const subcategoryContainer = document.getElementById('subcategory-container');
     subcategoryContainer.innerHTML = ''; // Vyčistíme kontajner
 
-    // Definícia podkategórií pre každú kategóriu
+    // Aktualizovaná definícia podkategórií podľa databázy
     const subcategoriesMap = {
         'muzi': [
-            { id: 'panske-oblecenie', name: 'Pánske oblečenie' },
-            { id: 'panska-obuv', name: 'Pánska obuv' },
-            { id: 'panske-vybavenie-doplnky', name: 'Pánske vybavenie' }
+            { id: 1, name: 'Oblečenie' },
+            { id: 2, name: 'Obuv' },
+            { id: 3, name: 'Vybavenie' }
         ],
         'zeny': [
-            { id: 'damske-oblecenie', name: 'Dámske oblečenie' },
-            { id: 'damska-obuv', name: 'Dámska obuv' },
-            { id: 'damske-vybavenie-doplnky', name: 'Dámske vybavenie' }
+            { id: 1, name: 'Oblečenie' },
+            { id: 2, name: 'Obuv' },
+            { id: 3, name: 'Vybavenie' }
         ],
         'deti': [
-            { id: 'detske-oblecenie', name: 'Detské oblečenie' },
-            { id: 'detska-obuv', name: 'Detská obuv' },
-            { id: 'detske-vybavenie-doplnky', name: 'Detské vybavenie' }
+            { id: 1, name: 'Oblečenie' },
+            { id: 2, name: 'Obuv' },
+            { id: 3, name: 'Vybavenie' }
         ],
         'sporty': [
-            { id: 'futbal', name: 'Futbal' },
-            { id: 'basketbal', name: 'Basketbal' },
-            { id: 'beh', name: 'Beh' },
-            { id: 'cyklistika', name: 'Cyklistika' },
-            { id: 'plavanie', name: 'Plávanie' },
-            { id: 'tenis', name: 'Tenis' }
+            { id: 4, name: 'Futbal' },
+            { id: 5, name: 'Basketbal' },
+            { id: 6, name: 'Beh' },
+            { id: 7, name: 'Cyklistika' },
+            { id: 8, name: 'Plávanie' },
+            { id: 9, name: 'Tenis' }
         ]
     };
 
-    const subcategories = subcategoriesMap[category] || subcategoriesMap['zeny'];
+    const subcategories = subcategoriesMap[category] || [];
 
     subcategories.forEach(subcat => {
         const button = document.createElement('button');
-        button.className = 'col-4 col-md-2 category-item custom-link';
+        button.className = 'col-12 col-md-2 category-item custom-link';
         button.textContent = subcat.name;
         button.onclick = () => openSubcategory(subcat.id);
         subcategoryContainer.appendChild(button);
@@ -81,21 +81,15 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     const subcategoryMap = {
-        "panske-oblecenie": "Pánske oblečenie",
-        "panska-obuv": "Pánska obuv",
-        "panske-vybavenie-doplnky": "Pánske vybavenie",
-        "damske-oblecenie": "Dámske oblečenie",
-        "damska-obuv": "Dámska obuv",
-        "damske-vybavenie-doplnky": "Dámske vybavenie",
-        "detske-oblecenie": "Detské oblečenie",
-        "detska-obuv": "Detská obuv",
-        "detske-vybavenie-doplnky": "Detské vybavenie",
-        "futbal": "Futbal",
-        "basketbal": "Basketbal",
-        "beh": "Beh",
-        "cyklistika": "Cyklistika",
-        "plavanie": "Plávanie",
-        "tenis": "Tenis"
+        1: "Oblečenie",
+        2: "Obuv",
+        3: "Vybavenie",
+        4: "Futbal",
+        5: "Basketbal",
+        6: "Beh",
+        7: "Cyklistika",
+        8: "Plávanie",
+        9: "Tenis"
     };
 
     generateSubcategories(category);
@@ -122,3 +116,11 @@ function applyPriceFilter() {
         alert('Prosím, zadaj platný rozsah cien (Od musí byť menšie alebo rovné Do).');
     }
 }
+
+document.getElementById('search-form').addEventListener('submit', function(event) {
+    const searchInput = document.querySelector('input[name="search"]').value.trim();
+    if (!searchInput) {
+        event.preventDefault();
+        alert('Zadajte názov produktu!');
+    }
+});

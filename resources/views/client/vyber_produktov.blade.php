@@ -18,14 +18,16 @@
         </a>
       </div>
       <div class="col-lg-8 col-md-8 d-flex justify-content-center">
-        <input type="text" class="form-control form-control-sm text-center me-2" placeholder="Zadajte názov produktu ... ">
-        <button class="btn btn-dark btn-sm me-2">Hľadať</button>
+        <form method="GET" action="{{route('search')}}" class="d-flex w-100 justify-content-center" role="search">
+          <input type="search" name="search" class="form-control form-control-sm text-center me-2" placeholder="Zadajte názov produktu..." aria-label="Vyhľadávanie" value="{{request('search')}}">
+          <button class="btn btn-dark btn-sm me-3" type="submit" id="searchButton">Hľadať</button>
+        </form>
       </div>
       <div class="col-lg-2 col-md-2 d-flex justify-content-center">
         <a href="{{url('/prihlasenie')}}" >
           <button class="btn btn-dark btn-sm me-2">Prihlásenie</button>
         </a>
-        <a href="{{url('/kosik')}}">
+        <a href="{{url('/cart ')}}">
           <button class="btn btn-dark btn-sm">Košík</button>
         </a>
       </div>
@@ -200,8 +202,13 @@
               </article>
           @empty
               <div class="col-12 text-center">
+                @if($search)
+                  <p>Žiadne produkty s daným názvomom.</p>
+                @else 
                   <p>Žiadne produkty v tejto kategórii.</p>
+                @endif               
               </div>
+            
           @endforelse
       </div>
   </section>

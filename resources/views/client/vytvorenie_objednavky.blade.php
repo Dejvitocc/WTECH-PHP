@@ -189,57 +189,54 @@
 
                 <!--Zhrnutie objednavky-->
                 <section class="col-12 col-md-6  custom-bg">
-                        <article class="row w-100 d-flex justify-content-center align-items-center mt-2">
+                    <div id="order-products">
+                        @foreach($cartItems as $item)
+                            <article class="row w-100 d-flex justify-content-center align-items-center mt-3 mb-3">
+                                <!-- Obrázok produktu -->
+                                <div class="col-4 d-flex justify-content-center">
+                                    <img src="{{ asset($item->product->images->first()->route ?? 'images/placeholder.jpg') }}" 
+                                        alt="{{ $item->product->name }}" 
+                                        class="img-fluid" 
+                                        style="max-height: 70px;">
+                                </div>
 
-                            <div class="col-4 d-flex justify-content-center">
-                                <img src="{{asset('images/Logo_obchodu.png')}}" alt="Logo of the Store" class="img-fluid" style="max-height: 70px;">
-                            </div>
+                                <!-- Množstvo -->
+                                <div class="col-4 d-flex justify-content-center align-items-center">
+                                    <input type="number" 
+                                        value="{{ $item->quantity }}" 
+                                        class="form-control me-2" 
+                                        style="width: 60%;"
+                                        readonly>
+                                </div>
 
-                            <div class="col-4  d-flex justify-content-center align-items-center">
-                                <input type="number" id="quantity1" value="1" min="1" class="form-control me-2" style="width: 60%;">
-                            </div>
-                            <div class="col-4 text-center">
-                                Nejaký popis
-                            </div>
-                        </article>
-                        <article class="row w-100 d-flex justify-content-center align-items-center mt-1">
-
-                            <div class="col-4 d-flex justify-content-center">
-                                <img src="{{asset('images/Logo_obchodu.png')}}" alt="Logo of the Store" class="img-fluid" style="max-height: 70px;">
-                            </div>
-
-                            <div class="col-4  d-flex justify-content-center align-items-center">
-                                <input type="number" id="quantity2" value="1" min="1" class="form-control me-2" style="width: 60%;">
-                            </div>
-                            <div class="col-4  text-center">
-                                Nejaký popis
-                            </div>
-    
-                        </article>
-                        <article class="row w-100 d-flex justify-content-center align-items-center mt-1">
-
-                            <div class="col-4 d-flex justify-content-center">
-                                <img src="{{asset('images/Logo_obchodu.png')}}" alt="Logo of the Store" class="img-fluid" style="max-height: 70px;">
-                            </div>
-
-                            <div class="col-4  d-flex justify-content-center align-items-center">
-                                <input type="number" id="quantity3" value="1" min="1" class="form-control me-2" style="width: 60%;">
-                            </div>
-                            <div class="col-4  text-center">
-                                Nejaký popis
-                            </div>
-    
-                        </article>
-
+                                <!-- Popis produktu -->
+                                <div class="col-4 text-center">
+                                    <h6 class="mb-0">{{ $item->product->name }}</h6>
+                                    @if($item->color || $item->size)
+                                        <small class="text-muted">
+                                            @if($item->color) Farba: {{ $item->color }} @endif
+                                            @if($item->size) | Veľkosť: {{ $item->size }} @endif
+                                        </small>
+                                    @endif
+                                    <p class="mb-0 text-primary fw-bold">
+                                        {{ number_format($item->product->price, 2) }} €
+                                    </p>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                        <!--
                         <div class="row">
                             <div class="col-12 mt-5 season-bg">
                                 <label class="form-label">Vybraný kuriér: </label>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row">
-                            <div class="col-12 mt-1 season-bg">
-                                <label class="form-label">Súčet: </label>
+                            <div class="col-12 mt-5 season-bg">
+                                <label class="form-label">Súčet: {{ number_format($cartItems->sum(function($item) {
+                    return $item->product->price * $item->quantity;
+                }), 2) }} €</label>
                             </div>
                         </div>
 

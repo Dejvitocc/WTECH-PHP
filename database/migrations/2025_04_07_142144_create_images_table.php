@@ -16,6 +16,12 @@ return new class extends Migration
             $table->string('text')->nullable();
             $table->string('route');
             $table->integer('productid');
+
+            // Definícia cudzieho kľúča
+            $table->foreign('productid')
+                  ->references('id')
+                  ->on('products')
+                  ->onDelete('cascade'); // Kaskádové vymazanie
         });
     }
 

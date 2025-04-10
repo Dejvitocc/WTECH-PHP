@@ -20,8 +20,10 @@
                     </a>
                 </div>
                 <div class="col-lg-9 col-md-9 d-flex justify-content-center">
-                    <input type="text" class="form-control form-control-sm text-center me-2" placeholder="Zadajte názov produktu ... ">
-                    <button class="btn btn-dark btn-sm me-2">Hľadať</button>
+                    <form method="GET" action="{{route('search')}}" class="d-flex w-100 justify-content-center" role="search">
+                        <input type="search" name="search" class="form-control form-control-sm text-center me-2" placeholder="Zadajte názov produktu..." aria-label="Vyhľadávanie" value="{{request('search')}}">
+                        <button class="btn btn-dark btn-sm me-3" type="submit" id="searchButton">Hľadať</button>
+                    </form>
                 </div>
 
             </div>
@@ -39,72 +41,67 @@
                 </div>
             </section>
 
-            <!-- Vybrané itemy v košíku s popisom a počtom kusov-->
+            <!-- Vybrané itemy v košíku s popisom a počtom kusov -->
             <section class="container mt-5">
-                <article class="row w-100 d-flex justify-content-center align-items-center border-itemy-kosik">
+                @if ($cartItems->isEmpty())
+                    <p class="text-center">Váš košík je prázdny.</p>
+                @else
+                    @foreach ($cartItems as $item)
+                        <article class="row w-100 d-flex justify-content-center align-items-center border-itemy-kosik mb-3">
+                            <!-- Obrázok produktu -->
+                            <div class="col-md-3 col-4 me-2">
+                                <a href="{{ route('detail_produktu', $item->product->id) }}" >
+                                <img src="{{ asset($item->product->images->first()->route ?? 'images/placeholder.jpg') }}" 
+                                    alt="{{ $item->product->name ?? 'Produkt' }}" 
+                                    class="img-fluid rounded mb-2 img-shopping-cart">
+                                </a>
+                            </div>
 
-                    <div class="col-4 d-flex justify-content-center ">
-                        <img src="{{asset('images/Logo_obchodu.png')}}" alt="Logo of the Store" class="img-fluid mb-1" style="max-height: 150px;">
-                    </div>
+                            <!-- Množstvo -->
+                            <div class="col-md-2 col-4 d-flex justify-content-center align-items-center">
+                                <form action="{{ route('cart.update', $item->id) }}" method="POST" class="d-flex">
+                                    @csrf
+                                    @method('PUT')
 
-                    <div class="col-4  d-flex justify-content-center align-items-center">
-                        <input type="number" id="quantity1" value="1" min="1" class="form-control me-2" style="width: 60%;">
-                    </div>
-                    <div class="col-3 text-center">
-                        Nejaký popis
+                                    <!--<button type="button" class="btn btn-sm  me-1" onclick="updateQuantity(this, -1)">−</button>-->
 
-                    </div>
-                    <!--Button pre odtránenie itemu z košíka-->
-                    <div class="col-1 d-flex justify-content-center align-items-center  mt-md-0">
-                        <button class="btn" onclick="deleteItem('quantity1')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                              </svg>
-                        </button>
-                    </div>
-                </article>
-                <article class="row w-100 d-flex justify-content-center align-items-center mt-3 border-itemy-kosik">
+                                    <input type="number" 
+                                        name="quantity" 
+                                        value="{{ $item->quantity }}" 
+                                        min="1" 
+                                        class="form-control me-2 text-center" 
+                                        style="width: 70%;"
+                                        onchange="this.form.submit()">
 
-                    <div class="col-4 d-flex justify-content-center ">
-                        <img src="{{asset('images/Logo_obchodu.png')}}" alt="Logo of the Store" class="img-fluid mb-1" style="max-height: 150px;;">
-                    </div>
+                                    <!--<button type="button" class="btn btn-sm me-1" onclick="updateQuantity(this, 1)">+</button> -->
+                                </form>
+                            </div>
 
-                    <div class="col-4  d-flex justify-content-center align-items-center">
-                        <input type="number" id="quantity2" value="1" min="1" class="form-control me-2" style="width: 60%;">
-                    </div>
-                    <div class="col-3  text-center">
-                        Nejaký popis
-                    </div>
-                    <div class="col-1 d-flex justify-content-center align-items-center  mt-md-0">
-                        <button class="btn" onclick="deleteItem('quantity2')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                              </svg>
-                        </button>
-                    </div>
 
-                </article>
-                <article class="row w-100 d-flex justify-content-center align-items-center mt-3 border-itemy-kosik">
 
-                    <div class="col-4 d-flex justify-content-center ">
-                        <img src="{{asset('images/Logo_obchodu.png')}}" alt="Logo of the Store" class="img-fluid mb-1" style="max-height: 150px;">
-                    </div>
+                            <!-- Popis (názov produktu, farba, veľkosť) -->
+                            <div class="col-md-4 col-8">
+                                <h6 class="mb-1">{{ $item->product->name ?? 'Produkt' }}</h6>
+                                @if ($item->color || $item->size)
+                                    <span class="text-muted small mb-1">
+                                        @if($item->color) Farba: {{ $item->color }} @endif
+                                        @if($item->size) | Veľkosť: {{ $item->size }} @endif
+                                    </span>
+                                @endif
+                                <p class="mb-0 text-primary fw-bold">{{ number_format($item->product->price, 2) }} €</p>
+                            </div>
 
-                    <div class="col-4  d-flex justify-content-center align-items-center">
-                        <input type="number" id="quantity3" value="1" min="1" class="form-control me-2" style="width: 60%;">
-                    </div>
-                    <div class="col-3  text-center">
-                        Nejaký popis
-                    </div>
-                    <div class="col-1 d-flex justify-content-center align-items-center  mt-md-0">
-                        <button class="btn" onclick="deleteItem('quantity3')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                              </svg>
-                        </button>
-                    </div>
-
-                </article>
+                            <!-- Tlačidlo na odstránenie -->
+                            <div class="col-1 d-flex justify-content-center align-items-center">
+                                <a href="{{ route('cart.remove', $item->id) }}" class="btn" title="Odstrániť">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </article>
+                    @endforeach
+                @endif
             </section>
 
             <!--Buttony na presmerovanie-->

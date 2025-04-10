@@ -11,14 +11,22 @@ use App\Http\Controllers\DetailProduktuController;
 use App\Http\Controllers\PlatobnaBranaController;
 use App\Http\Controllers\VytvorenieObjednavkyController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ShoppingCartController;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/kategorie', [VyberProduktovController::class, 'index'])->name('kategorie');
 Route::get('/prihlasenie', [PrihlasenieController::class, 'index'])->name('prihlasenie');
 Route::get('/registracia', [RegistraciaController::class, 'index'])->name('registracia');
 Route::get('/zabudnute_heslo', [ZabudnuteHesloController::class, 'index'])->name('zabudnute_heslo');
-Route::get('/kosik', [KosikController::class, 'index'])->name('kosik');
-Route::get('/detail_produktu', [DetailProduktuController::class, 'index'])->name('detail_produktu');
+//Route::get('/kosik', [KosikController::class, 'index'])->name('kosik');
+Route::get('/detail_produktu/{id}', [DetailProduktuController::class, 'index'])->name('detail_produktu');
 Route::get('/platobna_brana', [PlatobnaBranaController::class, 'index'])->name('platobna_brana');
 Route::get('/vytvorenie_objednavky', [VytvorenieObjednavkyController::class, 'index'])->name('vytvorenie_objednavky');
 Route::get('/products', [ProductController::class, 'index']);
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/cart', [ShoppingCartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [ShoppingCartController::class, 'add'])->name('cart.add');
+Route::put('/cart/{item}', [ShoppingCartController::class, 'update'])->name('cart.update');
+Route::get('/cart/remove/{productId}', [ShoppingCartController::class, 'remove'])->name('cart.remove');

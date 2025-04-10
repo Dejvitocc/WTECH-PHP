@@ -74,6 +74,11 @@ body.with-background {
 .color-circle:hover {
     border-color: #000;
 }
+
+.color-circle.selected, .size-option.selected {
+    border: 2px solid #bd101f; /* Čierna obruba pre vybranú farbu */
+    opacity: 0.8;
+}
 /* Obdĺžnik pre výber veľkosti s centrovaným textom */
 .size-option {
     width: 50px;
@@ -250,8 +255,15 @@ body.with-background {
     height: 250px;
     object-fit: cover;
 }
+
+.img-shopping-cart{
+    max-height: 150px;
+    max-width:150px;   
+    object-fit: cover; 
+}
 /* Fixná výška obrázkov v kartách */
 .card-img-top {
+    aspect-ratio: 16 / 9;
     height: 200px;
     object-fit: cover;
 }
@@ -362,4 +374,55 @@ body.with-background {
 
 .image-wrapper:hover .delete-icon {
     opacity: 1; /* Zobrazí sa pri prechode kurzorom */
+}
+
+.thumbnail {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    cursor: pointer;
+    margin-bottom: 10px;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+  }
+  .thumbnail:hover, .thumbnail.active {   
+    border: 2px solid #007bff;
+  }
+  .main-image {
+    width: 100%;
+    max-height: 450px;  
+    height: auto;
+    margin-bottom: 20px;
+    object-fit: cover;
+  }
+
+  .main-image-container {
+    justify-content: center;
+  }
+/* Responzívne úpravy pre menšie obrazovky pre thumbnails*/
+@media (max-width: 767.98px) { /* Bod zlomu pre Bootstrap 'md' */
+    .thumbnail-container {
+        flex-direction: row; /* Miniatúry vedľa seba */
+        justify-content: center;
+        margin-top: 10px; /* Odsadenie pod hlavný obrázok */
+        width: 100%; /* Zaberie celú šírku */
+        order: 2; /* Presunie pod hlavný obrázok */
+        justify-content: center;
+    }
+    .main-image-container {
+        order: 1; /* Hlavný obrázok ostane hore */
+        width: 100%; /* Zaberie celú šírku na malých obrazovkách */
+    }
+    .col-md-6 {
+        order: 3; /* Informácie o produkte budú posledné */
+        width: 100%;
+    }
+    .row {
+        flex-direction: column; /* Zorad - zabezpečí, že sa stĺpce nestratia */
+    }
+}
+
+#order-products{
+    max-height: 300px;
+    overflow-y: auto;
 }

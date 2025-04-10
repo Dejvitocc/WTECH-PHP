@@ -16,15 +16,18 @@ class VyberProduktovController extends Controller
 
         $category = Category::where('name', $kategoria)->firstOrFail();
         $query = $category->products();
-
+        
+        $subcategory = Category::where('name', $podkategoria)->first();
         if ($podkategoria) {
-            $query->wherePivot('subcategory_id', $podkategoria);
+            $query->wherePivot('subcategoryid', $podkategoria);
         }
+
+        $search = null;
 
         $products = $query->paginate(8);
         $products->appends(['kategoria' => $kategoria, 'podkategoria' => $podkategoria]);
 
-        return view('client.vyber_produktov', compact('kategoria', 'podkategoria', 'products'));
+        return view('client.vyber_produktov', compact('kategoria', 'podkategoria', 'products','search'));
     }
 }
 

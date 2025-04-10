@@ -9,7 +9,7 @@ class IndexController extends Controller
 {
     public function index() {
 
-        $popularProducts = Product::where('id', '>', 7)
+        $popularProducts = Product::where('id', '>', 6)
             ->with('images')
             ->limit(6)
             ->get();
