@@ -304,11 +304,7 @@ body.with-background {
     border-top: 2px solid #000;
     border-bottom: 2px solid #000;
 }
-/* Vlastné odstupy pre obsah */
-.custom-spacing {
-    margin-right: 60px;
-    margin-left: 50px;
-}
+
 /* Odstup vľavo pre karty */
 .card-spacing {
     margin-left: 50px;
@@ -423,6 +419,12 @@ body.with-background {
 }
 
 #order-products{
+    height:300px;
     max-height: 300px;
     overflow-y: auto;
 }
+
+.shipping {
+    justify-content: space-between;
+}
+
