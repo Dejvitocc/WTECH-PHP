@@ -13,6 +13,7 @@ use App\Http\Controllers\VytvorenieObjednavkyController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShoppingCartController;
+use App\Http\Controllers\UserData;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/kategorie', [VyberProduktovController::class, 'index'])->name('kategorie');
@@ -27,6 +28,12 @@ Route::get('/products', [ProductController::class, 'index']);
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/cart', [ShoppingCartController::class, 'index'])->name('cart.index');
+Route::get('/user_data',[UserData::class, 'index'])->name('user_data');
 Route::post('/cart/add', [ShoppingCartController::class, 'add'])->name('cart.add');
+Route::post('/register', [RegistraciaController::class, 'register'])->name('register');
+Route::post('/logout', [PrihlasenieController::class, 'logout'])->name('logout');
+Route::post('/prihlasenie', [PrihlasenieController::class, 'login'])->name('login');
 Route::put('/cart/{item}', [ShoppingCartController::class, 'update'])->name('cart.update');
 Route::get('/cart/remove/{productId}', [ShoppingCartController::class, 'remove'])->name('cart.remove');
+Route::post('/pouzivatelske_udaje', [UserData::class, 'update'])->name('pouzivatelske_udaje.update');
+Route::delete('/pouzivatelske_udaje/delete', [UserData::class, 'delete'])->name('pouzivatelske_udaje.delete');

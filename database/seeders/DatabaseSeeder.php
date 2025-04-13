@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             SubcategoriesTableSeeder::class,
             ProductsTableSeeder::class,
             ImagesTableSeeder::class,
-            ProductCategoriesTableSeeder::class
+            ProductCategoriesTableSeeder::class,
+            DeliveryOptionsTableSeeder::class,
+            PaymentMethodsTableSeeder::class,
         ]);
     }
 }

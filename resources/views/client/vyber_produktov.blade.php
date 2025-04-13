@@ -24,12 +24,28 @@
         </form>
       </div>
       <div class="col-lg-2 col-md-2 d-flex justify-content-center">
-        <a href="{{url('/prihlasenie')}}" >
-          <button class="btn btn-dark btn-sm me-2">Prihlásenie</button>
-        </a>
-        <a href="{{url('/cart ')}}">
-          <button class="btn btn-dark btn-sm">Košík</button>
-        </a>
+          @if (Auth::check())
+              <!-- Dropdown pre prihláseného používateľa -->
+              <div class="dropdown">
+                  <button class="btn btn-dark btn-sm dropdown-toggle " type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 160px">
+                      {{ Auth::user()->name }} {{ Auth::user()->surname }}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                      <li><a class="dropdown-item" href="{{ url('/cart') }}">Košík</a></li>
+                      <li><a class="dropdown-item" href="{{ url('/user_data') }}">Údaje</a></li>
+                      <li>
+                          <form method="POST" action="{{ route('logout') }}">
+                              @csrf
+                              <button type="submit" class="dropdown-item">Odhlásiť sa</button>
+                          </form>
+                      </li>
+                  </ul>
+              </div>
+          @else
+              <!-- Tlačidlá pre neprihláseného používateľa -->
+              <a href="{{ url('/prihlasenie') }}"><button class="btn btn-dark btn-sm me-2">Prihlásenie</button></a>
+              <a href="{{ url('/cart') }}"><button class="btn btn-dark btn-sm me-1">Košík</button></a>
+          @endif
       </div>
     </div>
   </header>
@@ -204,11 +220,11 @@
               <div class="col-12 text-center">
                 @if($search)
                   <p>Žiadne produkty s daným názvomom.</p>
-                @else 
+                @else
                   <p>Žiadne produkty v tejto kategórii.</p>
-                @endif               
+                @endif
               </div>
-            
+
           @endforelse
       </div>
   </section>

@@ -180,7 +180,7 @@ body.with-background {
 /* Malé obrazovky (576px - 767px): 2 itemy */
 @media (min-width: 576px) and (max-width: 767.98px) {
     .carousel-inner .carousel-item > div {
-        flex: 0 0 50%; 
+        flex: 0 0 50%;
     }
     .carousel-inner .carousel-item-end.active,
     .carousel-inner .carousel-item-next {
@@ -199,7 +199,7 @@ body.with-background {
 /* Stredné obrazovky (768px - 991px): 3 itemy */
 @media (min-width: 768px) and (max-width: 991.98px) {
     .carousel-inner .carousel-item > div {
-        flex: 0 0 33.33%; 
+        flex: 0 0 33.33%;
     }
     .carousel-inner .carousel-item-end.active,
     .carousel-inner .carousel-item-next {
@@ -218,7 +218,7 @@ body.with-background {
 /* Veľké obrazovky (≥992px): 4 itemy */
 @media (min-width: 992px) {
     .carousel-inner .carousel-item > div {
-        flex: 0 0 25%; 
+        flex: 0 0 25%;
     }
     .carousel-inner .carousel-item-end.active,
     .carousel-inner .carousel-item-next {
@@ -258,8 +258,8 @@ body.with-background {
 
 .img-shopping-cart{
     max-height: 150px;
-    max-width:150px;   
-    object-fit: cover; 
+    max-width:150px;
+    object-fit: cover;
 }
 /* Fixná výška obrázkov v kartách */
 .card-img-top {
@@ -291,7 +291,7 @@ body.with-background {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 2.8rem; 
+    min-height: 2.8rem;
 }
 
 
@@ -381,12 +381,12 @@ body.with-background {
     border: 2px solid transparent;
     transition: border 0.3s;
   }
-  .thumbnail:hover, .thumbnail.active {   
+  .thumbnail:hover, .thumbnail.active {
     border: 2px solid #007bff;
   }
   .main-image {
     width: 100%;
-    max-height: 450px;  
+    max-height: 450px;
     height: auto;
     margin-bottom: 20px;
     object-fit: cover;
@@ -426,5 +426,15 @@ body.with-background {
 
 .shipping {
     justify-content: space-between;
+}
+
+li .dropdown-item:active{
+    background-color: #e9ecef ;
+    color:black;
+}
+
+.btn.data{
+    width: 100%;
+    margin-top:10px;
 }
 

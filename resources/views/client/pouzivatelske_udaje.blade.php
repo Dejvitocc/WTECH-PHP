@@ -52,12 +52,24 @@
     </header>
 
     <main>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zavrieť"></button>
+            </div>
+        @endif
+        @if (session('warning'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ session('warning') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zavrieť"></button>
+            </div>
+        @endif
         <!-- Nadpis -->
         <section class="container mt-4 border-nadpisu w-50">
             <div class="row text-center">
                 <div class="col-12">
                     <h3>
-                        Fakturačné údaje - Doprava - Platba
+                        Údaje o používateľovi
                     </h3>
                 </div>
             </div>
@@ -66,16 +78,17 @@
         <!-- Vypĺňanie údajov -->
         <section class="container mt-5">
             <div class="row">
-                <div class="col-12 col-md-6 custom-bg">
+                <div class="col-md-3"></div>
+                <div class="col-12 col-md-6 custom-bg" style="padding: 20px">
                     <!-- Osobné info -->
-                    <form class="container">
+                    <form class="container" method="POST" action="{{route('pouzivatelske_udaje.update')}}">
                         @csrf
                         <div class="row">
                             <div class="col-6 col-md-5">
                                 <label for="name" class="form-label">Meno:</label>
                                 <input type="text" id="name" name="name" class="form-control" value="{{ $user->name ?? '' }}" required>
                                 @error('name')
-                                <div class="text-danger">{{$message}}</div>
+                                    <div class="text-danger">{{$message}}</div>
                                 @enderror
                             </div>
                             <div class="col-6 col-md-5">
@@ -153,122 +166,23 @@
                                 @enderror
                             </div>
                         </div>
-
-
-                        <!-- Dopravné spoločnosti/možnosti -->
-                        <div class="dropdown mt-3 w-100">
-                            <button class="btn btn-light dropdown-toggle w-100" id="deliveryButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Doručenie
-                            </button>
-                            <ul class="dropdown-menu w-100 text-center">
-                                @foreach ($deliveryOptions as $option)
-                                    <li>
-                                        <a class="dropdown-item d-flex shipping" href="#" onclick="changeDeliveryButtonText('{{ $option->name }}')">
-                                            <img src="{{ asset($option->icon_route) }}" alt="{{ $option->name }}" width="16" height="16" class="me-5">
-                                            <span>{{ $option->name }}</span>
-                                            <span>{{ number_format($option->price, 2) }}€</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-
-                        <!-- Možnosti platby -->
-                        <div class="dropdown mt-2 w-100">
-                            <button class="btn btn-light dropdown-toggle w-100" id="paymentButton" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Spôsob platby
-                            </button>
-                            <ul class="dropdown-menu w-75 text-center">
-                                @foreach ($paymentMethods as $method)
-                                    <li>
-                                        <a class="dropdown-item d-flex" href="#" onclick="changePaymentButtonText('{{ $method->name }}')">
-                                            <img src="{{ asset($method->icon_route) }}" alt="{{ $method->name }}" width="16" height="16" class="me-5">
-                                            <span>{{ $method->name }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </form>
-
-                    <!-- Možnosť uplatnenia kupónu -->
-                    <form id="coupon-form">
-                        <div class="row mt-3 w-100 mt-2">
-                            <div class="col-2 me-3 mt-2">
-                                <label for="kupon" class="form-label">Kupón:</label>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" id="kupon" name="kupon" class="form-control" required>
-                            </div>
-                            <div class="col-3 mb-2">
-                                <button type="submit" class="btn btn-success">Použiť</button>
+                        <div class="row">
+                            <div class="justify-center-content">
+                                <button type="submit" class="btn btn-outline-success data">Uložiť údaje</button>
                             </div>
                         </div>
-                    </form>
+                        </form>
+                        <form class="container" method="POST" action="{{route('pouzivatelske_udaje.delete')}}" onsubmit="return confirm('Naozaj chcete vymazať svoje konto? Táto akcia je nevratná.');">
+                            @csrf
+                            <div class="row">
+                                <div class="justify-center-content">
+                                    <button type="submit" class="btn btn-outline-danger data">Vymazať konto</button>
+                                </div>
+                            </div>
+                        </form>
                 </div>
-
-                <!-- Zhrnutie objednávky -->
-                <section class="col-12 col-md-6 custom-bg">
-                    <div id="order-products">
-                        @foreach($cartItems as $item)
-                            <article class="row w-100 d-flex justify-content-center align-items-center mt-3 mb-3">
-                                <!-- Obrázok produktu -->
-                                <div class="col-4 d-flex justify-content-center">
-                                    <img src="{{ asset($item->product->images->first()->route ?? 'images/placeholder.jpg') }}"
-                                         alt="{{ $item->product->name }}"
-                                         class="img-fluid"
-                                         style="max-height: 70px;">
-                                </div>
-
-                                <!-- Množstvo -->
-                                <div class="col-4 d-flex justify-content-center align-items-center">
-                                    <input type="number"
-                                           value="{{ $item->quantity }}"
-                                           class="form-control me-2"
-                                           style="width: 60%;"
-                                           readonly>
-                                </div>
-
-                                <!-- Popis produktu -->
-                                <div class="col-4 text-center">
-                                    <h6 class="mb-0">{{ $item->product->name }}</h6>
-                                    @if($item->color || $item->size)
-                                        <small class="text-muted">
-                                            @if($item->color) Farba: {{ $item->color }} @endif
-                                            @if($item->size) | Veľkosť: {{ $item->size }} @endif
-                                        </small>
-                                    @endif
-                                    <p class="mb-0 text-primary fw-bold">
-                                        {{ number_format($item->product->price, 2) }} €
-                                    </p>
-                                </div>
-                            </article>
-                        @endforeach
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 mt-5 season-bg">
-                            <label class="form-label">
-                                    <span id="cartTotal" data-original-total="{{ $cartItems->sum(function($item) {
-                                                return $item->product->price * $item->quantity;
-                                            }) }}">
-                                        {{ number_format($cartItems->sum(function($item) {
-                                            return $item->product->price * $item->quantity;
-                                        }), 2) }}
-                                    </span> €
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 mt-3 text-center">
-                            <a href="{{ url('/platobna_brana') }}">
-                                <button class="btn btn-success">Objednať s povinnosťou platby</button>
-                            </a>
-                        </div>
-                    </div>
-                </section>
             </div>
+
         </section>
 
         <!-- Podpora, obchodné podmienky a iné informácie -->
