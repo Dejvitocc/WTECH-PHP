@@ -10,7 +10,7 @@ class ShoppingCart extends Model
 
     public $timestamps = false;
 
-    
+
     protected $fillable = ['customer_id', 'product_id', 'quantity', 'color', 'size'];
 
     // Vzťah s modelom Customer

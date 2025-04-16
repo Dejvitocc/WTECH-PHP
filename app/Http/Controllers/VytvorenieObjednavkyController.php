@@ -13,9 +13,11 @@ class VytvorenieObjednavkyController extends Controller
 {
     public function index()
     {
-        $cartItems = ShoppingCart::get();
+        $userID = Auth::id();
+        $cartItems = ShoppingCart::where('customer_id', $userID)->get();
         $deliveryOptions = DeliveryOption::get();
         $paymentMethods = PaymentMethod::get();
+
 
         // Získaj prihláseného používateľa, ak existuje
         $user = Auth::check() ? Customer::find(Auth::id()) : null;

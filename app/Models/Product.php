@@ -10,13 +10,13 @@ class Product extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'name', 
-        'description', 
-        'producerInfo', 
-        'price', 
-        'color', 
-        'size', 
-        'productInfo', 
+        'name',
+        'description',
+        'producerInfo',
+        'price',
+        'color',
+        'size',
+        'productInfo',
         'stockQuantity'
     ];
 
@@ -29,5 +29,15 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(Image::class, 'productid', 'id');
+    }
+
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'product_colors');
+    }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class, 'product_sizes');
     }
 }

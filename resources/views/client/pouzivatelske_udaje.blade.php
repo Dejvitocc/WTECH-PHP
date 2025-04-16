@@ -28,7 +28,7 @@
                     @if (Auth::check())
                         <!-- Dropdown pre prihláseného používateľa -->
                         <div class="dropdown">
-                            <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 160px">
                                 {{ Auth::user()->name }} {{ Auth::user()->surname }}
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="userDropdown">

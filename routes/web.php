@@ -24,10 +24,12 @@ Route::get('/zabudnute_heslo', [ZabudnuteHesloController::class, 'index'])->name
 Route::get('/detail_produktu/{id}', [DetailProduktuController::class, 'index'])->name('detail_produktu');
 Route::get('/platobna_brana', [PlatobnaBranaController::class, 'index'])->name('platobna_brana');
 Route::get('/vytvorenie_objednavky', [VytvorenieObjednavkyController::class, 'index'])->name('vytvorenie_objednavky');
+Route::post('/vytvorenie_objednavky', [VytvorenieObjednavkyController::class, 'store'])->name('vytvorenie_objednavky.store');
 Route::get('/products', [ProductController::class, 'index']);
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/cart', [ShoppingCartController::class, 'index'])->name('cart.index');
+Route::get('/cart/proceed', [ShoppingCartController::class, 'proceedToOrder'])->name('cart.proceed');
 Route::get('/user_data',[UserData::class, 'index'])->name('user_data');
 Route::post('/cart/add', [ShoppingCartController::class, 'add'])->name('cart.add');
 Route::post('/register', [RegistraciaController::class, 'register'])->name('register');

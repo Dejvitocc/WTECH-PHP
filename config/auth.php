@@ -2,32 +2,30 @@
 
 return [
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'customer', // Predvolený guard
+        'passwords' => 'customers',
     ],
 
     'guards' => [
-        'web' => [
+        'customer' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'customers',
         ],
     ],
 
     'providers' => [
-        'users' => [
+        'customers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Customer::class, // Používame model Customer
+            'model' => App\Models\Customer::class,
         ],
     ],
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
-            'table' => 'password_resets',
+        'customers' => [
+            'provider' => 'customers',
+            'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],
     ],
-
-    'password_timeout' => 10800,
 ];

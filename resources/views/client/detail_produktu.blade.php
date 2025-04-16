@@ -129,9 +129,9 @@
                 <div class="row">
                     <label class="col-1 mt-5 me-4">Farby:</label>
                     <div class="color-selection col-5 mt-5" id="color-selection">
-                        @if($product->color)
-                            @foreach(explode(',', $product->color) as $color)
-                                <span class="color-circle" style="background-color: {{ trim($color) }};" aria-label="{{ ucfirst(trim($color)) }}" data-color="{{ trim($color) }}" onclick="selectColor(this)"></span>
+                        @if($product->colors->isNotEmpty())
+                            @foreach($product->colors as $color)
+                                <span class="color-circle" style="background-color: {{ $color->name }};" aria-label="{{ ucfirst($color->name) }}" data-color="{{ $color->name }}" onclick="selectColor(this)"></span>
                             @endforeach
                         @else
                             <p>Žiadne farby nie sú k dispozícii.</p>
@@ -143,9 +143,9 @@
                 <label class="mt-3">Veľkosti:</label>
                 <div class="row" id="size-selection">
                     <div class="col-1"></div>
-                    @if($product->size)
-                        @foreach(explode(',', $product->size) as $size)
-                            <div class="size-option" data-size="{{ trim($size) }}" onclick="selectSize(this)">{{ trim($size) }}</div>
+                    @if($product->sizes->isNotEmpty())
+                        @foreach($product->sizes as $size)
+                            <div class="size-option" data-size="{{ $size->name }}" onclick="selectSize(this)">{{ $size->name }}</div>
                         @endforeach
                     @else
                         <p>Žiadne veľkosti nie sú k dispozícii.</p>

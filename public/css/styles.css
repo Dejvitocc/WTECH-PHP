@@ -30,6 +30,8 @@ body.with-background {
 .season-bg {
     background-color: #1A3C5A;
     color: #FFFFFF;
+    padding-top: 5px;
+    border-radius: 7px;
 }
 /*Pozadie pre platobnú bránu*/
 .payment-bg {
@@ -438,3 +440,8 @@ li .dropdown-item:active{
     margin-top:10px;
 }
 
+.dropdown-item.active {
+    background-color: #e9ecef;
+    font-weight: bold;
+    color:black;
+}

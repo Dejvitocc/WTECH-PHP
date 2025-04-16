@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ShoppingCartController;
 
 class PrihlasenieController extends Controller
 {
@@ -14,23 +15,31 @@ class PrihlasenieController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            // Prihlásenie úspešné, presmeruj na domovskú stránku alebo inú stránku
-            return redirect('/')->with('message', 'Prihlásenie úspešné!');
+        if (Auth::guard('customer')->attempt($credentials)) {
+            $request->session()->regenerate();
+
+            // Prenos položiek z anonymného košíka
+            $cartController = new ShoppingCartController();
+            $cartController->syncCartAfterLogin();
+
+            return redirect()->intended('/')->with('success', 'Úspešne prihlásený!');
         }
 
-        return redirect()->back()->withErrors(['email' => 'Nesprávny email alebo heslo.']);
+        return back()->withErrors([
+            'email' => 'Zadané prihlasovacie údaje sú nesprávne.',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request)
     {
-        Auth::logout();
-        return redirect('/')->with('message', 'Boli ste odhlásení.');
+        Auth::guard('customer')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('success', 'Úspešne odhlásený!');
     }
 }
