@@ -251,7 +251,7 @@
                             <label class="form-label">
                                     <span id="cartTotal" data-original-total="{{ $cartItems->sum(function($item) {
                                                 return $item->product->price * $item->quantity;
-                                            }) }}">
+                                            }) }}"> Celková suma:
                                         {{ number_format($cartItems->sum(function($item) {
                                             return $item->product->price * $item->quantity;
                                         }), 2) }}

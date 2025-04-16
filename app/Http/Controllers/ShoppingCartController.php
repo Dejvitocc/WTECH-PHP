@@ -52,22 +52,29 @@ class ShoppingCartController extends Controller
 
         $product = Product::findOrFail($productId);
 
-        $colors = is_array($product->color) ? $product->color : explode(',', $product->color);
-        $sizes = is_array($product->size) ? $product->size : explode(',', $product->size);
+        $colors = $product->colors;
+        $sizes = $product->sizes;
 
-        // Farba
+
+        // Kontrola farby
         if (!$color) {
-            if (count($colors) === 1) {
-                $color = $colors[0];
+            if ($colors->isEmpty()) {
+                return redirect()->back()->with('error', 'Produkt nemá dostupné farby.')->withInput();
+            }
+            if ($colors->count() === 1) {
+                $color = $colors->first();
             } else {
                 return redirect()->back()->with('warning', 'Prosím, vyberte farbu produktu.')->withInput();
             }
         }
 
-        // Veľkosť
+        // Kontrola veľkosti
         if (!$size) {
-            if (count($sizes) === 1) {
-                $size = $sizes[0];
+            if ($sizes->isEmpty()) {
+                return redirect()->back()->with('error', 'Produkt nemá dostupné veľkosti.')->withInput();
+            }
+            if ($sizes->count() === 1) {
+                $size = $sizes->first();
             } else {
                 return redirect()->back()->with('warning', 'Prosím, vyberte veľkosť produktu.')->withInput();
             }

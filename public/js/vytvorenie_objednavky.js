@@ -25,7 +25,7 @@ document.getElementById('coupon-form').addEventListener('submit', function (e) {
 
     if (coupons[couponCode]) {
         const newTotal = Math.max(0, originalTotal - coupons[couponCode]);
-        totalElement.textContent = newTotal.toFixed(2);
+        totalElement.textContent = `Celková suma: ${newTotal.toFixed(2)}`;
     } else {
         alert('Neplatný kupón.');
     }
