@@ -8,23 +8,26 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 <body class="with-background">
-    
+
     <main class="d-flex justify-content-center align-items-center mt-5  vh-100">
         <section class="p-4 shadow-sm payment-bg rounded-4">
             <h3 class="text-center mb-4">Payment Information</h3>
-            <form action="#" method="POST">
-
+            <form action="{{ route('platobna_brana.process') }}" method="POST">
+                @csrf
                 <!-- Karta -->
                 <div class="mb-3">
                     <label for="cardNumber" class="form-label">Číslo karty</label>
-                    <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9101 1121" required maxlength="19" inputmode="numeric">
+                    <input type="text" class="form-control @error('card_number') is-invalid @enderror" id="cardNumber" name="card_number" placeholder="1234 5678 9101 1121" required maxlength="19" inputmode="numeric">
+                    @error('card_number')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
-                <!-- dátum expirácie a CVV -->
+                <!-- Dátum expirácie a CVV -->
                 <div class="mb-3 d-flex justify-content-between">
                     <div class="me-3 w-50">
                         <label for="expirationMonth" class="form-label">Expirácia</label>
-                        <select id="expirationMonth" class="form-select" required>
+                        <select id="expirationMonth" name="expiration_month" class="form-select @error('expiration_month') is-invalid @enderror" required>
                             <option value="">Month</option>
                             <option value="01">01</option>
                             <option value="02">02</option>
@@ -39,10 +42,13 @@
                             <option value="11">11</option>
                             <option value="12">12</option>
                         </select>
+                        @error('expiration_month')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="me-3 w-50">
                         <label for="expirationYear" class="form-label"></label>
-                        <select id="expirationYear" class="form-select mt-2" required>
+                        <select id="expirationYear" name="expiration_year" class="form-select mt-2 @error('expiration_year') is-invalid @enderror" required>
                             <option value="">Year</option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
@@ -50,16 +56,22 @@
                             <option value="2026">2026</option>
                             <option value="2027">2027</option>
                         </select>
+                        @error('expiration_year')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div class="w-25">
                         <label for="cvv" class="form-label">CVV</label>
-                        <input type="text" class="form-control" id="cvv" placeholder="123" required maxlength="3" inputmode="numeric">
+                        <input type="text" class="form-control @error('cvv') is-invalid @enderror" id="cvv" name="cvv" placeholder="123" required maxlength="3" inputmode="numeric">
+                        @error('cvv')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
                 <!-- Zaplatiť button-->
                 <div class="text-center">
-                    <button type="submit" class="btn btn-outline-success w-100" onclick="window.location.href='{{url('/')}}'">Zaplatiť</button>
+                    <button type="submit" class="btn btn-outline-success w-100">Zaplatiť</button>
                 </div>
             </form>
         </section>

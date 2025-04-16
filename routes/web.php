@@ -39,3 +39,4 @@ Route::put('/cart/{item}', [ShoppingCartController::class, 'update'])->name('car
 Route::get('/cart/remove/{productId}', [ShoppingCartController::class, 'remove'])->name('cart.remove');
 Route::post('/pouzivatelske_udaje', [UserData::class, 'update'])->name('pouzivatelske_udaje.update');
 Route::delete('/pouzivatelske_udaje/delete', [UserData::class, 'delete'])->name('pouzivatelske_udaje.delete');
+Route::post('/platobna_brana', [PlatobnaBranaController::class, 'processPayment'])->name('platobna_brana.process');
