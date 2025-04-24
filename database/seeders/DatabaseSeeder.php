@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             ProductCategoriesTableSeeder::class,
             DeliveryOptionsTableSeeder::class,
             PaymentMethodsTableSeeder::class,
+            AdminSeeder::Class,
         ]);
     }
 }

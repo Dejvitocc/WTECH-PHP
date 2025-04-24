@@ -445,3 +445,16 @@ li .dropdown-item:active{
     font-weight: bold;
     color:black;
 }
+
+.small-images{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;       /* maintains aspect ratio while filling space */
+    object-position: center; /* centers the image focus */
+    border-radius: 3px;      /* optional for rounded corners */
+    border: 1px solid #ddd;  /* optional border */
+}
+
+textarea{
+    text-align: left;
+}

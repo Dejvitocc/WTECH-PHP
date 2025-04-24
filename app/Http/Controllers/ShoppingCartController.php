@@ -62,7 +62,7 @@ class ShoppingCartController extends Controller
                 return redirect()->back()->with('error', 'Produkt nemá dostupné farby.')->withInput();
             }
             if ($colors->count() === 1) {
-                $color = $colors->first();
+                $color = $colors->first()->name;
             } else {
                 return redirect()->back()->with('warning', 'Prosím, vyberte farbu produktu.')->withInput();
             }
@@ -74,7 +74,7 @@ class ShoppingCartController extends Controller
                 return redirect()->back()->with('error', 'Produkt nemá dostupné veľkosti.')->withInput();
             }
             if ($sizes->count() === 1) {
-                $size = $sizes->first();
+                $size = $sizes->first()->name;    
             } else {
                 return redirect()->back()->with('warning', 'Prosím, vyberte veľkosť produktu.')->withInput();
             }
@@ -94,13 +94,13 @@ class ShoppingCartController extends Controller
             $cartItem->quantity += $quantity;
             $cartItem->save();
         } else {
-            // Vytvoriť nový záznam
+            // Vytvoriť nový záznamy
             ShoppingCart::create([
                 'customer_id' => $customerId,
                 'product_id' => $productId,
                 'quantity' => $quantity,
-                'color' => $color,
-                'size' => $size,
+                'color' =>  $color,
+                'size' =>  $size,
             ]);
         }
 

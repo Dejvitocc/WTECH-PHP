@@ -27,10 +27,13 @@
                     <!-- Dropdown pre prihláseného používateľa -->
                     <div class="dropdown">
                         <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->name }} {{ Auth::user()->surname }}
+                            {{ Auth::user()->name }} <!--{{ Auth::user()->surname }}-->
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="{{ url('/cart') }}">Košík</a></li>
+                            @if (Auth::user()->email === 'admin@admin.sk') 
+                                <li><a class="dropdown-item" href="{{ url('/admin') }}">Admin Panel</a></li>
+                            @endif
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -119,7 +122,7 @@
             <!-- Informácie o produkte -->
             <section class="col-md-6 product-info-column">
                 <h1 class="product-name">{{ $product->name }}</h1>
-                <p>{{ $product->gender ?? 'Unisex' }}</p>
+                <p>{{ $product->producerinfo}} </p>
                 <p class="product-price text-success">{{ number_format($product->price, 2) }} €</p>
                 <p class="product-description">
                     {{ $product->description ?? 'Tento produkt nemá popis.' }}

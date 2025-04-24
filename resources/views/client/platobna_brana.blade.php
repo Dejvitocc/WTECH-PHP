@@ -17,7 +17,7 @@
                 <!-- Karta -->
                 <div class="mb-3">
                     <label for="cardNumber" class="form-label">Číslo karty</label>
-                    <input type="text" class="form-control @error('card_number') is-invalid @enderror" id="cardNumber" name="card_number" placeholder="1234 5678 9101 1121" required maxlength="19" inputmode="numeric">
+                    <input type="text" class="form-control @error('card_number') is-invalid @enderror" id="cardNumber" name="card_number" placeholder="1234567891011121" required maxlength="16" inputmode="numeric" value="{{ old('card_number') }}">
                     @error('card_number')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -77,6 +77,5 @@
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
 </body>
 </html>

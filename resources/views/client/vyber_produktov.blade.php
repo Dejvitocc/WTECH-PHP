@@ -28,11 +28,14 @@
                     <!-- Dropdown pre prihláseného používateľa -->
                     <div class="dropdown">
                         <button class="btn btn-dark btn-sm dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 160px">
-                            {{ Auth::user()->name }} {{ Auth::user()->surname }}
+                            {{ Auth::user()->name }} <!--{{ Auth::user()->surname }}-->
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="{{ url('/cart') }}">Košík</a></li>
                             <li><a class="dropdown-item" href="{{ url('/pouzivatelske_udaje') }}">Údaje</a></li>
+                            @if (Auth::user()->email === 'admin@admin.sk') 
+                                <li><a class="dropdown-item" href="{{ url('/admin') }}">Admin Panel</a></li>
+                            @endif
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf

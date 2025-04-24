@@ -12,18 +12,24 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
-        'producerInfo',
+        'producerinfo',
         'price',
         'color',
         'size',
-        'productInfo',
-        'stockQuantity'
+        'productinfo',
+        'stockquantity'
     ];
 
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'productcategories', 'productid', 'categoryid')
                    ->withPivot('subcategoryid');
+    }
+
+    public function subcategories()
+    {
+        return $this->belongsToMany(Subcategory::class, 'productcategories', 'productid', 'subcategoryid')
+                    ->withPivot('categoryid');
     }
 
     public function images()
@@ -33,11 +39,11 @@ class Product extends Model
 
     public function colors()
     {
-        return $this->belongsToMany(Color::class, 'product_colors');
+        return $this->belongsToMany(Color::class, 'product_colors')->withTimestamps();;
     }
 
     public function sizes()
     {
-        return $this->belongsToMany(Size::class, 'product_sizes');
+        return $this->belongsToMany(Size::class, 'product_sizes')->withTimestamps();;
     }
 }

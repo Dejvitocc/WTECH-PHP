@@ -14,6 +14,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\UserData;
+use App\Http\Controllers\AdminController;   
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/kategorie', [VyberProduktovController::class, 'index'])->name('kategorie');
@@ -24,7 +25,8 @@ Route::get('/zabudnute_heslo', [ZabudnuteHesloController::class, 'index'])->name
 Route::get('/detail_produktu/{id}', [DetailProduktuController::class, 'index'])->name('detail_produktu');
 Route::get('/platobna_brana', [PlatobnaBranaController::class, 'index'])->name('platobna_brana');
 Route::get('/vytvorenie_objednavky', [VytvorenieObjednavkyController::class, 'index'])->name('vytvorenie_objednavky');
-Route::post('/vytvorenie_objednavky', [VytvorenieObjednavkyController::class, 'store'])->name('vytvorenie_objednavky.store');
+//Route::post('/vytvorenie_objednavky', [VytvorenieObjednavkyController::class, 'store'])->name('vytvorenie_objednavky.store');
+Route::post('/vytvorenie-objednavky/validate', [VytvorenieObjednavkyController::class, 'validateOrder'])->name('vytvorenie_objednavky.validate');
 Route::get('/products', [ProductController::class, 'index']);
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
@@ -40,3 +42,11 @@ Route::get('/cart/remove/{productId}', [ShoppingCartController::class, 'remove']
 Route::post('/pouzivatelske_udaje', [UserData::class, 'update'])->name('pouzivatelske_udaje.update');
 Route::delete('/pouzivatelske_udaje/delete', [UserData::class, 'delete'])->name('pouzivatelske_udaje.delete');
 Route::post('/platobna_brana', [PlatobnaBranaController::class, 'processPayment'])->name('platobna_brana.process');
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin/edit/{productId}', [AdminController::class, 'edit'])->name('admin.edit');
+Route::put('/admin/products/{id}', [AdminController::class, 'update'])->name('admin.update');
+Route::delete('/admin/images/{id}', [AdminController::class, 'destroyImage'])->name('admin.images.destroy');
+Route::delete('/admin/products/{id}', [AdminController::class, 'destroy'])->name('admin.products.destroy');
+Route::get('/admin/produkt/create', [AdminController::class, 'create'])->name('admin.create');
+Route::post('admin/produkt/store', [AdminController::class, 'store'])->name('admin.store');
