@@ -190,7 +190,13 @@
         <section>
             <h2>Údaje o výrobku</h2>
             <ul>
-                <li><strong>Typ výrobku:</strong> {{ $product->productinfo ?? 'Není definovaný' }}</li>
+                @if (!empty($product->productinfo))
+                    @foreach (explode(',', $product->productinfo) as $info)
+                        <li>{{ trim($info) }}</li>
+                    @endforeach
+                @else
+                    <li>Není definovaný</li>
+                @endif
             </ul>
         </section>
     </main>
