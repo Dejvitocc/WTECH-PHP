@@ -31,7 +31,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="userDropdown">
                             <li><a class="dropdown-item" href="{{ url('/cart') }}">Košík</a></li>
-                            @if (Auth::user()->email === 'admin@admin.sk') 
+                            @if (Auth::user()->email === 'admin@admin.sk')
                                 <li><a class="dropdown-item" href="{{ url('/admin') }}">Admin Panel</a></li>
                             @endif
                             <li>
@@ -122,7 +122,6 @@
             <!-- Informácie o produkte -->
             <section class="col-md-6 product-info-column">
                 <h1 class="product-name">{{ $product->name }}</h1>
-                <p>{{ $product->producerinfo}} </p>
                 <p class="product-price text-success">{{ number_format($product->price, 2) }} €</p>
                 <p class="product-description">
                     {{ $product->description ?? 'Tento produkt nemá popis.' }}
@@ -182,8 +181,8 @@
 
         <!-- Informácie o výrobcovi -->
         <section>
-            <h2>Informácie o výrobcovi</h2>
-            <p>{{ $product->manufacturer_info ?? 'Informácie o výrobcovi nie sú dostupné.' }}</p>
+            <h2>Výrobca</h2>
+            <p>{{ $product->producerinfo ?? 'Informácie o výrobcovi nie sú dostupné.' }}</p>
         </section>
 
         <!-- Údaje o výrobku -->
