@@ -112,7 +112,7 @@ class PlatobnaBranaController extends Controller
             'postal_code' => $customerData['postal_code'],
             'payment_method' => $orderData['payment_method'],
             'total_price' => $orderData['total_amount'],
-            'status' => 'pending',
+            'status' => 'payed',
         ]);
 
         // Create order items

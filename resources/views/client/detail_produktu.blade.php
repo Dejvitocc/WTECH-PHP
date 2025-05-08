@@ -107,16 +107,18 @@
                 @endif
 
                 @forelse($product->images->take(4) as $image)
-                    <img src="{{ asset($image->route) }}" alt="{{ $product->name }} - pohľad" class="thumbnail {{ $loop->first ? 'active' : '' }}" onclick="changeImage('{{ asset($image->route) }}', this)">
+                    <img src="{{ asset($image->route) }}" alt="{{ $product->name }} - pohľad" class="thumbnail {{ $loop->first ? 'active first-thumb' : '' }}" onclick="changeImage('{{ asset($image->route) }}', this)">
                 @empty
                     <img src="{{ asset('images/placeholder.jpg') }}" alt="Žiadny obrázok" class="thumbnail active" onclick="changeImage('{{ asset('images/placeholder.jpg') }}', this)">
                 @endforelse
-                <!-- Doplnenie placeholdermi ak nie je dostatok obrázkov -->
+                
+                <!-- Doplnenie placeholdermi ak nie je dostatok obrázkov 
                 @if($product->images->count() < 4)
                     @for($i = $product->images->count(); $i < 3; $i++)
                         <img src="{{ asset('images/placeholder.jpg') }}" alt="Žiadny obrázok" class="thumbnail" onclick="changeImage('{{ asset('images/placeholder.jpg') }}', this)">
                     @endfor
                 @endif
+                -->
             </div>
 
             <!-- Informácie o produkte -->

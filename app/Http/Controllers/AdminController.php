@@ -148,6 +148,7 @@ class AdminController extends Controller
             DB::table('productcategories')->where('productid', $id)->delete();
             $product = Product::with('images')->findOrFail($id);
 
+            DB::statement("SELECT setval('images_id_seq', (SELECT COALESCE(MAX(id), 1) FROM images))");
             // Delete associated images
             foreach ($product->images as $image) {
                 $filePath = public_path($image->route);
@@ -196,6 +197,7 @@ class AdminController extends Controller
 // Uloženie nového produktu
     public function store(Request $request)
     {
+        DB::statement("SELECT setval('images_id_seq', (SELECT COALESCE(MAX(id), 1) FROM images))");
         // Validácia požiadaviek
         $validated = $request->validate([
             'name' => 'required|string|max:255',

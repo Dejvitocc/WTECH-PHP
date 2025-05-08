@@ -386,12 +386,16 @@ body.with-background {
   .thumbnail:hover, .thumbnail.active {
     border: 2px solid #007bff;
   }
+
+.first-thumb {
+    margin-left: 20px;
+}
   .main-image {
     width: 100%;
-    max-height: 450px;
+    max-height: 350px;
     height: auto;
     margin-bottom: 20px;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   .main-image-container {
